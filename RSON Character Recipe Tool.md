@@ -21,7 +21,7 @@ This tool allows you to convert serialized character information from Skate 3 in
 
 1. Install dependencies:
     ```sh
-    pip install PyQt5 pymem S3RecipeHandler
+    pip install -r requirements.txt
     ```
 2. Make sure `rpcs3.exe` is running with Skate 3 loaded.
 3. Run the tool:
