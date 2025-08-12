@@ -5,6 +5,7 @@ from rpcs3_handle import rpcs3_mem
 from S3RecipeHandler.Recipe import Recipe
 import json
 
+
 class maiuUi(QtWidgets.QWidget,main_ui_form):
     def setupUi(self,form):
         super().setupUi(form)
@@ -35,11 +36,13 @@ class maiuUi(QtWidgets.QWidget,main_ui_form):
                 recipe_json = json.loads(file.read())
             
             gameRecipe = Recipe(Recipe_Json=recipe_json)
-            self.rpcs3.write_recipe(gameRecipe.get_bytes())
+            game_bytes = gameRecipe.get_bytes()
+            self.rpcs3.write_recipe(game_bytes)
             self.msg_box = QtWidgets.QMessageBox()
             self.msg_box.setText("loaded recipe")
             self.msg_box.exec()
-        except:
+        except Exception as e:
+            print(e)
             self.msg_box = QtWidgets.QMessageBox()
             self.msg_box.setText("failed to load recipe")
             self.msg_box.exec()
@@ -49,6 +52,7 @@ class maiuUi(QtWidgets.QWidget,main_ui_form):
             recipe_bytes = self.rpcs3.read_recipe()
             gameRecipe = Recipe(recipe_bytes=recipe_bytes)
 
+
             rson = json.dumps(gameRecipe.to_json(), indent=4)
 
             with open("output.json","w+") as file:
@@ -57,7 +61,8 @@ class maiuUi(QtWidgets.QWidget,main_ui_form):
             self.msg_box = QtWidgets.QMessageBox()
             self.msg_box.setText("outputed recipe to output.json")
             self.msg_box.exec()
-        except:
+        except Exception as e:
+            print(e)
             self.msg_box = QtWidgets.QMessageBox()
             self.msg_box.setText("failed to extract recipe")
         
